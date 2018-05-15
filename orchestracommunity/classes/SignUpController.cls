@@ -130,6 +130,8 @@ public class SignUpController extends BaseClass {
     
     @RemoteAction 
     public Static Response createUser(SignUpHandler signUpData) {
+        
+        System.debug( 'signUpData:-\n' + JSON.serialize( signUpData ) );
         Response response;
         response = signUpData.signUpUser();
         return response;

@@ -1,10 +1,11 @@
-public class SignUpHandler {
+public without sharing class SignUpHandler {
     
-    public AccountDTO  accountData;
-    public ContactDTO  contactData;
+    public AccountDTO accountData;
+    public ContactDTO contactData;
     
     public class AccountDTO {
-        public String billingEntityName;   
+        public String billingEntityId; 
+        public String billingEntityName;  
         public String officePhone ;
         public String billingAddress ;
         public String billingStreet;
@@ -33,69 +34,74 @@ public class SignUpHandler {
    
     /**
      *@purpose : Handle signup User functionality
-	 *@return  : response
+     *@return  : response
      */
     public Response signUpUser() {
-        Response response;
-        Savepoint sp = Database.setSavepoint();
-        Account	account;
-		Contact contact;
-        List<Account> accountList;
-        System.debug('signUpData ==' +JSON.serialize(accountData));
-        if(accountData != null && contactData != null && String.isNotBlank(contactData.Email)) {
-            if(validateEmail(contactData.Email)) {
-                
-                // Create Account
-                try {
-                    accountList = getAccountByName();
-                    if(accountList != null && !accountList.isEmpty()) {
-                        account = accountList[0];
-                        System.debug('accountList[0] ==' +account);
+        
+        System.debug( 'signUpData:-\n' + JSON.serialize( this ) );
+        Response response = new response();
+        
+        if( accountData != NULL ) {
+            if( contactData != NULL && String.isNotBlank( contactData.Email ) ) {
+                if( validateEmail( contactData.Email ) ) {
+                    
+                    Account account = new Account( Id = accountData.billingEntityId );
+                    Savepoint sp = Database.setSavepoint();
+                    
+                    if( String.isBlank( account.Id ) ) {
+                        try {
+                            account = createAccount();
+                            INSERT account;
+                        }
+                        catch( Exception e ) {
+                            Database.Rollback( sp );
+                            displayExceptionMessage( e );
+                            response.setStatus( FALSE, System.Label.Failed_To_Save_Billing_Entity, NULL );
+                        }
+                    } 
+                    
+                    if( String.isBlank( account.Id ) ) {
+                        
+                        // Create Contact
+                        Contact contact = new Contact();
+                        try {
+                            contact = createContact( account.Id );
+                            INSERT contact;
+                        }
+                        catch( Exception e ) {
+                            Database.Rollback( sp );
+                            displayExceptionMessage( e );
+                        }
+                        
+                        if( contact.Id != NULL ) {
+                            response = CommunityUser.createUserForCommunity( contact );
+                            if( !response.success ) {
+                                Database.Rollback( sp );
+                            }
+                        }
+                        else {
+                            response.setStatus( FALSE, System.Label.Failed_To_Save_Contact, NULL );
+                        }
                     }
-                    else{
-                        account = createAccount();
-                        INSERT account;
-                        System.debug('account ==' +account);
-                    }
                 }
-                catch(Exception e) {
-                    Database.Rollback(sp);
-                    displayExceptionMessage(e);
-                    return new Response(false, 'Error in creating Account.', null);
+                else {
+                    response.setStatus( FALSE, System.Label.Invalid_Email_Address, NULL );
                 }
-                
-                // Create Contact
-                try {
-                    contact = createContact(account.Id);
-                    System.debug('account ==' +account);
-                    INSERT contact;
-                    return new Response(true, 'Success', null);
-                }
-                catch(Exception e) {
-                    Database.Rollback(sp);
-                    displayExceptionMessage(e);
-                    return new Response(false, 'Error in creating Contact.', null);
-                }                
-                /*response = CommunityUser.createUserForCommunity(contact);
-                if(!response.Success) {
-                   Database.Rollback(sp);
-                }*/
-                
             }
-            else{
-                 return new Response(false, 'Please enter valid emailId', null);
-            }
+            else {
+                response.setStatus( FALSE, System.Label.User_Details_Missing, NULL );
+            }   
         }
-        else{
-            return new Response(false, 'Required data does not exist', null);
+        else {
+            response.setStatus( FALSE, System.Label.Billing_Entity_Details_Missing, NULL );
         }
-        //return response;
+        return response;
     }
     
        
     /**
      *@purpose : Handle account operation
-	 *@return  : Account
+     *@return  : Account
      */
     private Account createAccount() {
         Account account; 
@@ -132,7 +138,7 @@ public class SignUpHandler {
     
     /**
      *@purpose : Fetch account by name
-	 *@return  : account
+     *@return  : account
      */
     private List<Account> getAccountByName() {
         List<Account> accountList = [SELECT Id, Name, OwnerId, Owner.UserRoleId
@@ -144,7 +150,7 @@ public class SignUpHandler {
 
     /**
      *@purpose : Populate contact fields
-	 *@return  : contact
+     *@return  : contact
      */
     private Contact createContact(Id accountId) {
         Contact contact = new Contact(); 
@@ -162,7 +168,7 @@ public class SignUpHandler {
     }
     
    /**
-	*@PURPOSE     : FETCHES AND DISPLAYS AN EXCEPTION MESSAGE.
+    *@PURPOSE     : FETCHES AND DISPLAYS AN EXCEPTION MESSAGE.
     *@PARAMETER   : EXCEPTION.
     *@RETURN TYPE : STRING [ DETAILS OF THE EXCEPTION ].
     */

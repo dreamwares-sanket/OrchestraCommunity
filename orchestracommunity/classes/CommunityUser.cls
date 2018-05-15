@@ -3,7 +3,7 @@
  *@CreateDate : 3 May 2018
  */
 public class CommunityUser {
-	
+    
     
     /**
      *@Purpose  : Initaiate to create community user
@@ -67,7 +67,7 @@ public class CommunityUser {
      */
     private static Response createUser(Set<String> nickNameSet, Contact contact, Id profileId) {
         Response response;
-        Integer intCount = 2;            		
+        Integer intCount = 2;                   
         String aliasStr; 
         User communityUser = new User();
         
@@ -82,7 +82,7 @@ public class CommunityUser {
                     communityUserNickName += intCount;
                     intCount += 1;
                 }
-            }	
+            }   
             
             if( String.isNotBlank( communityUserNickName ) ) {
                 communityUser.CommunityNickName = communityUserNickName;
@@ -105,7 +105,7 @@ public class CommunityUser {
             
             try{
                 INSERT communityUser;
-                response = new Response(true, 'User Created Succesfully', null);
+                response = new Response(true, 'User Created Succesfully', communityUser);
             }
             Catch(Exception e) {
                SignUpHandler.displayExceptionMessage(e);
@@ -120,10 +120,10 @@ public class CommunityUser {
 
    
     /**
-	 * @Purpose : Function to fetch profile from custom setting data
-	 * @Parameter: -
-	 * @Returns  : Community user profile Id 
-	 */
+     * @Purpose : Function to fetch profile from custom setting data
+     * @Parameter: -
+     * @Returns  : Community user profile Id 
+     */
     private static String getProfileId(){
         List<CommunityUserSetting__c> communityUserSetting = CommunityUserSetting__c.getall().values();
         
@@ -133,10 +133,10 @@ public class CommunityUser {
         
         //Get Id of profile
         try{
-        	profileId = [SELECT Id FROM Profile WHERE Name =: profileName].id;
+            profileId = [SELECT Id FROM Profile WHERE Name =: profileName].id;
             
         }catch(Exception e){
-        	System.debug('Exception occured : '+e.getMessage());
+            System.debug('Exception occured : '+e.getMessage());
         }
         
         return profileId;
@@ -146,7 +146,7 @@ public class CommunityUser {
     /**
      *@Purpose : Create formatted nickName.
      *@Param   : users FirstName, users LastName
-     *@Return 	: String
+     *@Return   : String
     */
     private static String getFormattedNickName(String firstName, String lastName ){
         

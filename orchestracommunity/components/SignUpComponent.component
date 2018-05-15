@@ -19,7 +19,18 @@
                <div class="slds-form-element">
                    <label class="slds-form-element__label" for="input-id-12">Billing Entity Name *</label>
                    <div class="slds-form-element__control">
-                       <input type="text" id="input-id-12" class="slds-input" name="billingEntityName" required="true" />
+                       <input type="text" id="selectedAccountId" name="billingEntityId" 
+                              style="display:none;"/>
+                       <input type="text" id="selectedAccountName" 
+                              name="billingEntityName" style="display:none;"/>
+                       <c:Typeahead searchBoxId="acctSearchBox" object="Account" 
+                                    primaryField="Name"
+                                    searchScope="NAME" placeholder="Billing Entity Name" 
+                                    minSearchLength="2"
+                                    destinationForSelectedId="selectedAccountId"
+                                    destinationForSelectedValue="selectedAccountName"                                   
+                                    stealFocus="false" styleClass="slds-input"
+                       />
                    </div>
                </div>
            </div>
@@ -319,7 +330,7 @@
                     $(element).parents( "div.slds-form-element" ).removeClass( "slds-has-error" );
                 },
                 submitHandler: function( form ) { //asynchronous form submit
-                    //console.log( "before form submit", $( form ).serializeArray() );
+                    console.log( "before form submit", $( form ).serializeArray() );
                     var formData = $( form ).serializeArray();
                     var signupData = getFormDataInRequiredFormat( formData );
                     console.log( "dataToSend : ", signupData );

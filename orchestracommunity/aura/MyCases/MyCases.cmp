@@ -1,0 +1,131 @@
+<!--<aura:component controller="MyCasesComponentController" implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global">-->
+	<aura:component controller="GetBuildingsData" implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <aura:handler name="CustomDataTableRowSelection" event="c:CustomDataTableRowSelection" action="{!c.getSelectedRecords}" />
+    
+    <aura:attribute name="myCases" type="Object"/>
+    <aura:attribute name="filteredTableData" type="Object"/>
+    <aura:attribute name="tableColumns" type="List"/>
+    <aura:attribute name="priorities" type="String[]" default="Critical,High,Medium,Low" />
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType':'Case' }"/>
+    <aura:attribute name="filter" type="Map" default="{ 'building':'', status : '', user : '' }" />
+    <aura:attribute name="pageData" type="Map" default="{ 'status':[], buildings : [], users : [] }" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="caseId" type="String" />
+    <force:recordEdit aura:id="editCase" recordId="{!v.caseId}"/>
+    
+    <div class="TableTitle">
+        <span style="font-size: 30px;">My Cases</span>
+        <!--<lightning:button variant="brand" label="New Case" onclick="{!c.handleNewCase}"/>-->
+        <lightning:button variant="brand" label="New Case" onclick="{!c.showModal}"/>
+    </div>
+    
+    <!-- Filters - start -->
+    <div class="slds-grid slds-gutters slds-p-around_x-small">
+        <div class="slds-col slds-col slds-size_1-of-12">
+        	<span>Filters</span>
+      	</div>
+      <div class="slds-col">
+      	<lightning:select aura:id="filterByBuilding" value="{!v.filter.building}" label="Building" onchange="{!c.filterChange}" >
+            <option value="">-- None --</option>
+            <aura:iteration items="{!v.pageData.buildings}" var="building">
+                <option value="{!building.Id}" text="{!building.Label}"></option>
+            </aura:iteration>
+        </lightning:select>
+      </div>
+      <div class="slds-col">
+        <lightning:select aura:id="filterByStatus" label="Status" value="{!v.filter.status}" onchange="{!c.filterChange}" >
+            <option value="">-- None --</option>       
+            <aura:iteration items="{!v.pageData.status}" var="status">
+                <option value="{!status.Id}" text="{!status.Label}"></option>
+            </aura:iteration>
+        </lightning:select>
+      </div>
+      <div class="slds-col">
+        <lightning:select aura:id="filterByUser" label="Created By" value="{!v.filter.user}" onchange="{!c.filterChange}" >
+            <option value="">-- None --</option>   
+            <aura:iteration items="{!v.pageData.users}" var="user">
+                <option value="{!user.Id}" text="{!user.Label}"></option>
+            </aura:iteration>
+        </lightning:select>
+      </div>
+    </div>
+    <!-- Filters - end -->
+    <aura:if isTrue="{!v.filteredTableData != null}">
+        <c:CasesDataTable tableData="{!v.filteredTableData}" 
+                           tableColumns="{!v.tableColumns}" 
+                           keyField="id" 
+                           showHeader="true" 
+                           tableId="MyCasesTable"/>
+    </aura:if>
+    
+    <!--<c:inputLookup type="Case" value="{!v.caseId}" className="form-control"/>-->
+    <!--
+	Div- case create form 
+ -->
+	<!-- Form start -->
+    <div id="newCaseSection" style="display:none;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.hideModal}">
+                        <!--<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+                        </svg>-->
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Case</h2>
+                </header>
+        
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:layout >
+                        <lightning:layoutItem padding="around-small" size="12">
+                
+                            <!-- CREATE NEW EXPENSE -->
+                            <div aria-labelledby="newcaseform">
+                            
+                                <!-- CREATE NEW EXPENSE FORM -->
+                                <form class="slds-form--stacked">          
+                                    <lightning:select name="building" aura:id="addcaseform" label="Building" value="{!v.newCase.Building__c}" required="true" messageWhenValueMissing="Please select building">
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.pageData.buildings}" var="building">
+                                            <option value="{!building.Id}" text="{!building.Label}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <lightning:input type="text" aura:id="addcaseform" label="Case Subject"
+                                                     name="subject"
+                                                     value="{!v.newCase.Subject}" required="true" messageWhenValueMissing="Please fill case subject" />
+                                    <lightning:input type="text" aura:id="addcaseform" label="Description"
+                                                     name="description"
+                                                     value="{!v.newCase.Description}" />
+                                    <lightning:input type="text" aura:id="addcaseform" label="Room Name / Number"
+                                                     name="roomname"
+                                                     value="{!v.newCase.Room_Name_Number__c}" required="true" messageWhenValueMissing="Please fill room name / number" />
+                                    <lightning:select name="priority" aura:id="addcaseform" label="Select Priority" value="{!v.newCase.Priority}">
+                                        <option value="">-- None --</option>
+                                        <aura:iteration items="{!v.priorities}" var="priority">
+                                            <option value="{!priority}" text="{!priority}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    
+                                </form>
+                            </div>
+                            <!-- / CREATE NEW EXPENSE -->
+                
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+        
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.hideModal}">Cancel</button>
+                    <lightning:button label="Create Case" 
+                                      variant="brand"
+                                      onclick="{!c.clickCreateCase}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+      <!-- Form end -->
+</aura:component>

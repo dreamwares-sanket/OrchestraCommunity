@@ -1,0 +1,85 @@
+<aura:component access="global" >
+    <aura:registerEvent name="CustomDataTableRowSelection" type="c:CustomDataTableRowSelection"/> 
+    <aura:attribute name="tableId" type="String" required="true"/>
+    <aura:attribute name="tableData" type="Object" required="true" />
+    <aura:attribute name="tableColumns" type="List" required="true" />
+    <aura:attribute name="keyField" type="String" required="true" />
+    <aura:attribute name="showHeader" type="Boolean" default="false"/>
+    <aura:attribute name="maxHeight" type="String" default="10rem;"/>
+    
+    <aura:attribute name="rowsToShow" type="Object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.customDataTableInit}"/>
+    
+    <aura:handler name="change" value="{!v.tableData}" action="{!c.tableDataChange}"/>
+    
+    <div aura:id="{!v.tableId}" class="container slds-media slds-media--responsive slds-p-vertical_medium">
+        <div class="custom-data-table" style="max-height:568px">
+            <table id="table_Id" class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout slds-table_cell-buffer slds-max-medium-table_stacked-horizontal" role="grid">
+                <aura:if isTrue="{!v.showHeader}">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <aura:iteration items="{!v.tableColumns}" var="fld">
+                                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="{!fld.label}" scope="col">
+                                  <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                    <span class="slds-truncate" title="{!fld.label}">{!fld.label}</span>
+                                    <div class="slds-icon_container">
+                                        <lightning:icon iconName="utility:arrowdown" variant="arrowdown" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon arrowIcn"/>
+                                     </div>
+                                    </a>
+                                </th>
+                            </aura:iteration>
+                        </tr>
+                    </thead>
+                </aura:if>
+                <tbody>
+                    <aura:if isTrue="{!v.rowsToShow != null}"> 
+                        <aura:iteration items="{!v.rowsToShow}" var="obj" indexVar="key">
+                            <tr class="slds-hint-parent custom-selectable-row" id="{!obj.Id+'-'+key}" onclick="{!c.rowSelected2}">
+                                <!--<td class="slds-text-align_right custom-action-td" role="gridcell">
+                                <ui:inputRadio aura:id="{!'r-'+key}" class="custom-input-radio" name="selection" label="{!obj.Id+'-'+key}" labelClass="slds-hide" change="{!c.rowSelected}"/>
+                            </td>-->
+                                <aura:iteration items="{!obj.fieldsToShow}" var="fld">
+                                    <td role="gridcell" data-label="{!fld.label}">
+                                        <div class="slds-truncate slds-float_left TableHead">
+                                            <span>{!fld.fieldLabel}</span>
+                                        </div>
+                                        <div class="slds-truncate slds-float_right" title="{!fld.fieldValue}">
+                                            <aura:if isTrue="{!fld.fieldType=='currency'}">
+                                                <lightning:formattedNumber value="{!fld.fieldValue}" style="{!fld.fieldType}" currencyCode="USD" />
+                                            </aura:if>
+                                            <aura:if isTrue="{!(fld.fieldType=='number')||(fld.fieldType=='percent')}">
+                                                <lightning:formattedNumber value="{!fld.fieldValue}" style="{!fld.fieldType}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='text'}">
+                                                {!fld.fieldValue}
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='email'}">
+                                                <lightning:formattedEmail value="{!fld.fieldValue}" style="{!fld.fieldType}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='phone'}">
+                                                <lightning:formattedPhone value="{!fld.fieldValue}" style="{!fld.fieldType}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='url'}">
+                                                <lightning:formattedUrl value="{!fld.fieldValue}" style="{!fld.fieldType}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='location'}">
+                                                <lightning:formattedLocation value="{!fld.fieldValue}" style="{!fld.fieldType}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!fld.fieldType=='datetime'}">
+                                                <lightning:formattedDateTime value="{!fld.fieldValue}"/>
+                                            </aura:if>
+                                        </div>
+                                    </td>
+                                </aura:iteration>
+                            </tr>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <lightning:spinner variant="brand" size="small"/>
+                        </aura:set>
+                    </aura:if>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</aura:component>

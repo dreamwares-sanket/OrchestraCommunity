@@ -1,0 +1,38 @@
+<apex:page showHeader="false" standardStylesheets="false" applyHtmlTag="false" docType="html-5.0" title="Community">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>        
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,400i,500,600,700,800" rel="stylesheet" />        
+        <!-- Import the Design System style sheet -->
+        <apex:slds />
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        <div class="slds-scope" align="center">
+            <div class="slds-container_small">
+            <div class="slds-m-top_large">
+                <div class="">
+                    <div class="" style="display:block;">                                          
+                        <div class="">                                                
+                            <div class="" >   
+                                <span class="">
+                                    Signed-Up Successfully:
+                                </span>
+                                <div class="row">
+                                    <div class="cell">                                    
+                                        <div class="">
+                                            <apex:outputLink value="{!$Site.BaseSecureUrl}" rendered="{!$Site.LoginEnabled}">Sign In</apex:outputLink>                                        
+                                        </div>
+                                    </div>                                
+                                </div>                                                                                         
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+    </html>
+</apex:page>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Billing_Entity_Details_Missing</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Entity Details Missing</shortDescription>
+        <value>Sorry, Billing Entity details were missing.</value>
+    </labels>
+    <labels>
+        <fullName>Failed_To_Create_User</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed To Create User</shortDescription>
+        <value>Sorry, an unexpected error occurred; unable to signup now. 
+Please contact System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Failed_To_Save_Billing_Entity</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed To Save Billing Entity</shortDescription>
+        <value>Sorry, an unexpected error occurred while saving billing entity details.
+Please contact System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Failed_To_Save_Contact</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed To Save Contact</shortDescription>
+        <value>Sorry, an unexpected error occurred while saving your contact details. 
+Please contact System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Email_Address</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Email Address</shortDescription>
+        <value>Sorry, an email address was found.</value>
+    </labels>
+    <labels>
+        <fullName>User_Details_Missing</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User Details Missing</shortDescription>
+        <value>Sorry, User details were missing. Please contact System Administrator</value>
+    </labels>
+</CustomLabels>

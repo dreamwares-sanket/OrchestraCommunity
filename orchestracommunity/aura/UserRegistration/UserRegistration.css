@@ -1,0 +1,18 @@
+.THIS .tableArrow svg{
+    fill:#006dcc !important;
+}
+.THIS .invitedUsers{
+    border: 1px solid #eaeaea;
+    padding: 14px;
+    margin-bottom:14px;
+    background:#fff;
+}
+.THIS .formContent{display: flex; align-items: flex-end; justify-content: space-between;}
+.THIS .buildingDetails{}
+
+@media (max-width:48rem)
+    {
+    .THIS .formContent{flex-direction: column-reverse;}
+    .THIS .formContent div{width: 100%;margin-bottom: 10px;padding: 0 !important;}
+    .THIS .formContent .slds-size_1-of-12{text-align:right;}
+}

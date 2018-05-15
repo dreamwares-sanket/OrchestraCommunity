@@ -1,0 +1,262 @@
+<aura:component controller="UserRegistrationComponentController" implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+
+    <aura:handler name="CustomDataTableRowSelection" event="c:CustomDataTableRowSelection" action="{!c.getSelectedRecords}" />
+
+    <aura:attribute name="invitedUsers" type="Object"/>
+    <aura:attribute name="tableColumns" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <div>
+        <lightning:button variant="brand" label="Invite Users" />
+        <div class="slds-p-around_x-large">
+            <h2 class="slds-form-element__label slds-form-element__legend slds-text-title_caps slds-m-bottom_small" style="font-size:22px;">Invited User</h2>
+            <div class="invitedUsers">
+                <div class="slds-form slds-form_compound">
+                    <fieldset class="slds-form-element">
+                        <div class="slds-form-element__group">
+                            <div class="slds-form-element__row formContent">
+                                <div class="slds-form-element slds-size_2-of-7">
+                                    <label class="slds-form-element__label" for="input-01">First Name</label>
+                                    <input type="text" id="input-01" class="slds-input" />
+                                </div>
+                                <div class="slds-form-element slds-size_2-of-7">
+                                    <label class="slds-form-element__label" for="input-02">Last Name</label>
+                                    <input type="text" id="input-02" class="slds-input" />
+                                </div>
+                                <div class="slds-form-element slds-size_2-of-6">
+                                    <label class="slds-form-element__label" for="input-02">Email</label>
+                                    <input type="text" id="input-02" class="slds-input" />
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-12">
+                                    <button class="slds-button slds-button_neutral">
+                                        <lightning:icon iconName="utility:add" variant="add" size="xx-small" class="tableArrow" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <ul class="slds-accordion">
+                    <li class="slds-accordion__list-item">
+                        <section class="slds-accordion__section slds-is-open ">
+                            <div class="slds-accordion__summary">
+                                <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                    <button aria-controls="accordion-details-01" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action">
+                                        <lightning:icon iconName="utility:switch" variant="switch" size="xx-small" class="" />
+                                        <span class="slds-truncate" title="Accordion summary" style="margin-left:10px;">Building(1) Details</span>
+                                    </button>
+                                </h3>
+                            </div>
+                            <div aria-hidden="false" class="slds-accordion__content" style="display:block;">
+                                <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal" id="blInfo">
+                                    <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th class="slds-cell-shrink" scope="col">
+                                            <span class="slds-assistive-text" id="check-group-header">Choose a row to select</span>
+                                            <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-all" value="checkbox-all" aria-labelledby="check-button-label-all check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-all" id="check-button-label-all">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select all</span>
+                                        </label>
+                                </span>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Close Date">Opportunity Name
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Account Name">Account Name
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Close Date">Close Date
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-shrink" data-label="Select Row">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" aria-labelledby="check-button-label-01 check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                                        </label>
+                                    </span>
+                                        </td>
+                                        <td data-label="Account Name">
+                                            <div class="slds-truncate" title="Cloudhub">Cloudhub</div>
+                                        </td>
+                                        <td data-label="Close Date">
+                                            <div class="slds-truncate" title="4/14/2015">4/14/2015</div>
+                                        </td>
+                                        <td data-label="Prospecting">
+                                            <div class="slds-truncate" title="Prospecting">Prospecting</div>
+                                        </td>
+
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-shrink" data-label="Select Row">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-02" value="checkbox-02" aria-labelledby="check-button-label-02 check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-02" id="check-button-label-02">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select item 2</span>
+                                        </label>
+                                    </span>
+                                        </td>
+                                        <td data-label="Account Name">
+                                            <div class="slds-truncate" title="Cloudhub">Cloudhub</div>
+                                        </td>
+                                        <td data-label="Close Date">
+                                            <div class="slds-truncate" title="4/14/2015">4/14/2015</div>
+                                        </td>
+                                        <td data-label="Prospecting">
+                                            <div class="slds-truncate" title="Prospecting">Prospecting</div>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </li>
+
+                    <li class="slds-accordion__list-item">
+                        <section class="slds-accordion__section slds-is-open ">
+                            <div class="slds-accordion__summary">
+                                <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                    <button aria-controls="accordion-details-01" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action">
+                                        <lightning:icon iconName="utility:chevronright" variant="chevronright" size="xx-small" class="" />
+                                        <span class="slds-truncate" title="Accordion summary" style="margin-left:10px;">Building(2) Details</span>
+                                    </button>
+                                </h3>
+                            </div>
+                            <div aria-hidden="false" class="slds-accordion__content" style="display:none;">
+                                <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal" id="blInfo">
+                                    <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th class="slds-cell-shrink" scope="col">
+                                            <span class="slds-assistive-text" id="check-group-header">Choose a row to select</span>
+                                            <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-all" value="checkbox-all" aria-labelledby="check-button-label-all check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-all" id="check-button-label-all">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select all</span>
+                                        </label>
+                                    </span>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Close Date">Opportunity Name
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Account Name">Account Name
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Close Date">Close Date
+                                                <button class="slds-button slds-button_icon slds-button_icon" title="Sort">
+                                                    <lightning:icon iconName="utility:arrowdown" variant="arrowdown" size="xx-small" class="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon tableArrow" />
+                                                    <span class="slds-assistive-text">Sort</span>
+                                                </button>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-shrink" data-label="Select Row">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" aria-labelledby="check-button-label-01 check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                                        </label>
+                                    </span>
+                                        </td>
+                                        <td data-label="Account Name">
+                                            <div class="slds-truncate" title="Cloudhub">Cloudhub</div>
+                                        </td>
+                                        <td data-label="Close Date">
+                                            <div class="slds-truncate" title="4/14/2015">4/14/2015</div>
+                                        </td>
+                                        <td data-label="Prospecting">
+                                            <div class="slds-truncate" title="Prospecting">Prospecting</div>
+                                        </td>
+
+                                    </tr>
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-shrink" data-label="Select Row">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" name="options" id="checkbox-02" value="checkbox-02" aria-labelledby="check-button-label-02 check-group-header" />
+                                        <label class="slds-checkbox__label" for="checkbox-02" id="check-button-label-02">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label slds-assistive-text">Select item 2</span>
+                                        </label>
+                                    </span>
+                                        </td>
+                                        <td data-label="Account Name">
+                                            <div class="slds-truncate" title="Cloudhub">Cloudhub</div>
+                                        </td>
+                                        <td data-label="Close Date">
+                                            <div class="slds-truncate" title="4/14/2015">4/14/2015</div>
+                                        </td>
+                                        <td data-label="Prospecting">
+                                            <div class="slds-truncate" title="Prospecting">Prospecting</div>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="slds-m-top_small slds-text-align_right">
+                <button class="slds-button slds-button_brand">Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="TableTitle">
+        <!--<span style="font-size: 30px;">Invited User</span>-->
+        <aura:if isTrue="{!v.invitedUsers != null}">
+            <c:CustomDataTable tableData="{!v.invitedUsers}"
+                               tableColumns="{!v.tableColumns}"
+                               keyField="id"
+                               showHeader="true"
+                               tableId="InvitedUsersTable"/>
+        </aura:if>
+    </div>
+
+
+</aura:component>

@@ -1,0 +1,7 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="recordId" type="String" default=""/>
+    
+    <div>
+        <c:inputLookup type="Contact" value="{!v.recordId}" className="form-control "/>
+    </div>
+</aura:component>

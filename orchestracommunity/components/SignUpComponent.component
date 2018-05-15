@@ -1,0 +1,357 @@
+<apex:component controller="SignUpController" >
+    <!-- Attribute Definitions -->
+    <apex:attribute name="show" description="display or not" type="Boolean" required="true"/>    
+    
+    <!-- Component Definition -->
+    <apex:outputPanel rendered="{!show}">
+          
+        
+    <header >
+        <div class="banner">
+            <apex:image url="{!URLFOR($Resource.bannerImg, 'images/logoImg.png')}" width="168" /> 
+            <h2>Account Set-Up</h2>
+        </div>
+    </header>
+    
+    <div class="form-container">
+       <form name="signupform" id="signupform">
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-12">Billing Entity Name *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-12" class="slds-input" name="billingEntityName" required="true" />
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_compound slds-m-bottom_large">
+               <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__label">Name *</legend>
+                   <div class="slds-form-element__group">
+                       <div class="slds-form-element__row">
+                           <div class="slds-form-element slds-size_1-of-2">
+                               <div class="slds-form-element__control">
+                                   <input type="text" id="input-11" class="slds-input" name="firstName" required="true" />
+                                   <label class="sub-label" for="input-11">First Name </label>
+                               </div>
+                           </div>
+                           <div class="slds-form-element slds-size_1-of-2">
+                               <div class="slds-form-element__control">
+                                   <input type="text" id="input-02" class="slds-input" name="lastName" required="true" />
+                                   <label class="sub-label" for="input-02">Last Name</label>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </fieldset>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Email Address *</label>
+                   <div class="slds-form-element__control">
+                       <input type="email" id="input-id-01" class="slds-input" name="email" required="true"  />
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-02">Physical Address  *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" name="physicalStreet" id="input-id-02" class="slds-input" required="true" />
+                        <label class="sub-label" for="input-02">Address 1</label>
+                   </div>
+               </div>
+           </div>
+           
+            <div class="slds-form slds-form_compound slds-m-bottom_large">
+           <fieldset class="slds-form-element">
+               
+               <div class="slds-form-element__group">
+                 
+                   <div class="slds-form-element__row">
+                       <div class="slds-form-element slds-size_1-of-2">
+                            <div class="slds-form-element__control">                           
+                               <input type="text" name="physicalCity" id="input-04" class="slds-input" />
+                               <label class="sub-label" for="input-04">City</label>
+                           </div>
+                       </div>
+                       <div class="slds-form-element slds-size_1-of-2">
+                           <div class="slds-form-element__control">
+                               <input type="text" name="physicalState" id="input-05" class="slds-input" />                           
+                               <label class="sub-label" for="input-05">State/Province</label>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="slds-form-element__row slds-m-bottom_large">
+                       <div class="slds-form-element slds-size_1-of-2"> 
+                           <div class="slds-form-element__control">
+                               <input type="text" name="physicalPostalCode" id="input-06" class="slds-input" />
+                               <label class="sub-label" for="input-06">Zip/Postal Code</label>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="slds-form-element__row">
+                       <div class="slds-form-element slds-size_1-of-1">                          
+                           <div class="slds-form-element__control">
+                                <input type="text" name="physicalCountry" id="input-03" class="slds-input" />
+                                <label class="sub-label" for="input-03">Country</label>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </fieldset>
+           </div>
+           <div class="slds-form-element__row slds-m-bottom_large">
+               <div class="slds-form-element slds-size_1-of-1">
+                   <div class="slds-form-element__label displayBlock">Billing Address Same as Physical Address</div>
+                   <span class="slds-checkbox">              
+                       <input type="checkbox" name="isSameAddress" id="checkbox-1" value="on" class="address-samecheck" />
+                       <label class="slds-checkbox__label" for="checkbox-1">
+                           <span class="slds-checkbox_faux"></span>                  
+                       </label>
+                   </span>
+               </div>
+           </div>
+           <div class="billingaddress-fields">
+               <div class="slds-form slds-form_stacked slds-m-bottom_large">
+                   <div class="slds-form-element">
+                       <label class="slds-form-element__label" for="input-id-04">Billing Address  *</label>
+                       <div class="slds-form-element__control">
+                           <input type="text" id="input-id-04" name="billingStreet" class="slds-input" />
+                            <label class="sub-label" for="input-04">Address 1</label>
+                       </div>
+                   </div>
+               </div>
+               
+               <div class="slds-form slds-form_compound slds-m-bottom_large">
+                   <fieldset class="slds-form-element">
+                       
+                       <div class="slds-form-element__group">
+                          
+                           <div class="slds-form-element__row">
+                               <div class="slds-form-element slds-size_1-of-2">    
+                                   <div class="slds-form-element__control">
+                                       <input type="text" name="billingCity" id="input-04" class="slds-input" />                               
+                                       <label class="sub-label" for="input-04">City</label>
+                                   </div>
+                               </div>
+                               <div class="slds-form-element slds-size_1-of-2">
+                                   <div class="slds-form-element__control">
+                                       <input type="text" name="billingState" id="input-05" class="slds-input" />                           
+                                       <label class="sub-label" for="input-05">State/Province</label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="slds-form-element__row slds-m-bottom_large">
+                               <div class="slds-form-element slds-size_1-of-2">   
+                                   <div class="slds-form-element__control">
+                                       <input type="text" name="billingPostalCode" id="input-06" class="slds-input" />
+                                       <label class="sub-label" for="input-05">Zip/Postal Code</label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="slds-form-element__row">
+                               <div class="slds-form-element slds-size_1-of-1"> 
+                                   <div class="slds-form-element__control">
+                                       <input type="text" name="billingCountry" id="input-03" class="slds-input" />
+                                       <label class="sub-label" for="input-05">Country</label>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </fieldset>
+               </div>
+           </div>
+             
+           <div class="slds-form-element__group slds-m-bottom_large">
+               <label class="slds-form-element__label" for="input-id-01">Office Phone</label>
+               <div class="slds-form-element__row contentFlex">
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">
+                       <div class="slds-form-element__control">
+                           <input type="text" name="officePhoneOne" id="input-04" class="slds-input" maxlength="3" />
+                           <label class="sub-label" for="input-04">(###)</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">
+                       <div class="slds-form-element__control">
+                           <input type="text" name="officePhoneTwo" id="input-05" class="slds-input" maxlength="3" /> 
+                           <label class="sub-label" for="input-06">###</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12">
+                       <div class="slds-form-element__control">
+                           <input type="text" name="officePhoneThree" id="input-05" class="slds-input" maxlength="4" />
+                           <label class="sub-label" for="input-03">####</label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form-element__group slds-m-bottom_large">
+               <label class="slds-form-element__label" for="input-id-01">Mobile  Phone *</label>
+               <div class="slds-form-element__row contentFlex">
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">  
+                       <div class="slds-form-element__control">
+                           <input type="text" name="mobilePhoneOne" id="input-04" class="slds-input" required="true" maxlength="3" />
+                           <label class="sub-label" for="input-04">(###)</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">
+                       <div class="slds-form-element__control">
+                           <input type="text" name="mobilePhoneTwo" id="input-05" class="slds-input" required="true" maxlength="3" /> 
+                           <label class="sub-label" for="input-06">###</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12">
+                       <div class="slds-form-element__control">
+                           <input type="text" name="mobilePhoneThree" id="input-05" class="slds-input" required="true" maxlength="4" />
+                           <label class="sub-label" for="input-03">####</label>
+                       </div>
+                   </div>
+               </div>
+               </div>
+          
+           
+            <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Notes</label>
+                   <div class="slds-form-element__control">
+                       <label class="sub-label" for="input-03">Provide any additional information that you feel necessary</label>
+                         <textarea id="input-unique-id" class="slds-textarea" ></textarea>
+                   </div>
+               </div>
+           </div>
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                  <div class="slds-form-element__control">
+                    <span class="slds-checkbox">
+                      <input type="checkbox" name="agreeCheck" required="true" id="agreeCheck" value="agreeCheck" />
+                      <label class="slds-checkbox__label" for="agreeCheck">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-form-element__label">I agree to <a target="_blank" href="https://orchestrapartners123--partial--c.cs96.content.force.com/servlet/servlet.FileDownload?file=0151g0000005YPM">terms and conditions</a></span>
+                      </label>
+                    </span>
+                  </div>
+                </div>
+           </div>
+           
+           <button class="btnDefault" type="submit">SUBMIT</button>
+        </form> 
+        </div>
+          <footer class="footer">Powered by <a href="#">Squarespace</a></footer>
+            </apex:outputPanel>
+    <script>
+        $( document ).ready( function() {
+            /*
+            * on change of "whether billing and physical address" is same, 
+            * show or hide billing address fields
+            */
+            $( '.address-samecheck' ).on( 'change', function() {
+                if( $( this ).prop( 'checked' ) ) {
+                    $( '.billingaddress-fields' ).hide();
+                } else {
+                    $( '.billingaddress-fields' ).show();
+                }
+            } );
+            
+            /*
+            * validate signup form before submit and 
+            * send data to back-end using vf-remoting
+            */
+            $("#signupform").validate({
+                rules: {
+                    email : {
+                        email : true
+                    },
+                    billingStreet : { //required only if physical and billing address are different
+                        required : function() {
+                            if( $( '.address-samecheck' ).prop( 'checked' ) ) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    },
+                    mobilePhoneOne: {
+                        number : true
+                    },
+                    mobilePhoneTwo: {
+                        number : true
+                    },
+                    mobilePhoneThree: {
+                        number : true
+                    },
+                    officePhoneOne: {
+                        number : true
+                    },
+                    officePhoneTwo: {
+                        number : true
+                    },
+                    officePhoneThree: {
+                        number : true
+                    },
+                    physicalPostalCode : {
+                        number : true
+                    },
+                    billingPostalCode : {
+                        number : true
+                    }
+                },
+                messages : {
+                    mobilePhoneOne: "",
+                    mobilePhoneTwo: "",
+                    mobilePhoneThree: "",
+                    officePhoneOne: "",
+                    officePhoneTwo: "",
+                    officePhoneThree: "",
+                    physicalPostalCode : "Please enter numbers only",
+                    billingPostalCode : "Please enter numbers only"
+                },
+                errorPlacement: function( error, element ) {
+                    error.insertAfter( element.parents( ".slds-form-element__control" ) );                
+                },
+                highlight: function( element, errorClass, validClass ) {
+                    $(element).parents( "div.slds-form-element" ).addClass( "slds-has-error" );
+                },
+                unhighlight: function( element, errorClass, validClass ) {
+                    $(element).parents( "div.slds-form-element" ).removeClass( "slds-has-error" );
+                },
+                submitHandler: function( form ) { //asynchronous form submit
+                    //console.log( "before form submit", $( form ).serializeArray() );
+                    var formData = $( form ).serializeArray();
+                    var signupData = getFormDataInRequiredFormat( formData );
+                    console.log( "dataToSend : ", signupData );
+                    displayLoader();
+        
+                    var options = {
+                        url : "SignUpController.createUser",
+                        params : [ signupData ],
+                    };
+                    callVfRemoting(options).then(
+                        // success function
+                        function(result){
+                            if( result.success ) {
+                                showToastMessage( 'Success', result.message, 'success' );                                                      
+                                hideLoader();
+                                //redirect to login view
+                                showComponents(true, false, false);
+                            } else {
+                                hideLoader();
+                                showToastMessage( 'Error', result.message, 'error' );  
+                            }
+                        },
+                        // error function
+                        function(error){
+                            hideLoader();
+                            showToastMessage( 'Error', error, 'error' );
+                        }
+                    );
+                    return false;
+                }
+            });
+        } );
+    </script>
+
+</apex:component>

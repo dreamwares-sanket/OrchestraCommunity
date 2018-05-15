@@ -1,0 +1,219 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <apex:stylesheet value="{!URLFOR($Resource.cssFileCode)}"/>
+    <apex:slds /> 
+    <header>
+        <div class="banner">
+            <apex:image url="{!URLFOR($Resource.bannerImg, 'images/logoImg.png')}" width="168" /> 
+        <h2>Account Set-Up</h2>
+        </div>
+    </header>
+    <div class="form-container">
+       <form>
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Billing Entity Name *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_compound slds-m-bottom_large">
+               <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__label">Name *</legend>
+                   <div class="slds-form-element__group">
+                       <div class="slds-form-element__row">
+                           <div class="slds-form-element slds-size_1-of-2">
+                               
+                               <input type="text" id="input-01" class="slds-input" />
+                               <label class="sub-label" for="input-01">First Name </label>
+                           </div>
+                           <div class="slds-form-element slds-size_1-of-2">
+                               
+                               <input type="text" id="input-02" class="slds-input" />
+                               <label class="sub-label" for="input-02">Last Name</label>
+                           </div>
+                       </div>
+                   </div>
+               </fieldset>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Email Address *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Physical Address  *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                        <label class="sub-label" for="input-02">Address 1</label>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                        <label class="sub-label" for="input-02">Address 2</label>
+                   </div>
+               </div>
+           </div>
+           
+            <div class="slds-form slds-form_compound slds-m-bottom_large">
+           <fieldset class="slds-form-element">
+               
+               <div class="slds-form-element__group">
+                 
+                   <div class="slds-form-element__row">
+                       <div class="slds-form-element slds-size_1-of-2">                           
+                           <input type="text" id="input-04" class="slds-input" />
+                           <label class="sub-label" for="input-04">City</label>
+                       </div>
+                       <div class="slds-form-element slds-size_1-of-2">
+                           <input type="text" id="input-05" class="slds-input" />                           
+                           <label class="sub-label" for="input-05">State/Province</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element__row slds-m-bottom_large">
+                       <div class="slds-form-element slds-size_1-of-2">                           
+                           <input type="text" id="input-06" class="slds-input" />
+                           <label class="sub-label" for="input-06">Zip/Postal Code</label>
+                       </div>
+                   </div>
+                   <div class="slds-form-element__row">
+                       <div class="slds-form-element slds-size_1-of-1">                          
+                           <input type="text" id="input-03" class="slds-input" />
+                            <label class="sub-label" for="input-03">Country</label>
+                       </div>
+                   </div>
+               </div>
+           </fieldset>
+           </div>
+           <div class="slds-form-element__row slds-m-bottom_large">
+               <div class="slds-form-element slds-size_1-of-1">
+                   <div class="slds-form-element__label displayBlock">Billing Address Same as Physical Address</div>
+                   <span class="slds-checkbox">              
+                       <input type="checkbox" name="options" id="checkbox-1" value="on" />
+                       <label class="slds-checkbox__label" for="checkbox-1">
+                           <span class="slds-checkbox_faux"></span>                  
+                       </label>
+                   </span>
+               </div>
+           </div>
+           
+            <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Billing Address  *</label>
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                        <label class="sub-label" for="input-02">Address 1</label>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <div class="slds-form-element__control">
+                       <input type="text" id="input-id-01" class="slds-input" />
+                        <label class="sub-label" for="input-02">Address 2</label>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form slds-form_compound slds-m-bottom_large">
+               <fieldset class="slds-form-element">
+                   
+                   <div class="slds-form-element__group">
+                      
+                       <div class="slds-form-element__row">
+                           <div class="slds-form-element slds-size_1-of-2">                           
+                               <input type="text" id="input-04" class="slds-input" />                               
+                               <label class="sub-label" for="input-04">City</label>
+                           </div>
+                           <div class="slds-form-element slds-size_1-of-2">
+                               <input type="text" id="input-05" class="slds-input" />                           
+                               <label class="sub-label" for="input-05">State/Province</label>
+                           </div>
+                       </div>
+                       <div class="slds-form-element__row slds-m-bottom_large">
+                           <div class="slds-form-element slds-size_1-of-2">                           
+                               <input type="text" id="input-06" class="slds-input" />
+                             <label class="sub-label" for="input-05">Zip/Postal Code</label>
+                           </div>
+                       </div>
+                       <div class="slds-form-element__row">
+                           <div class="slds-form-element slds-size_1-of-1">                          
+                               <input type="text" id="input-03" class="slds-input" />
+                               <label class="sub-label" for="input-05">Country</label>
+                           </div>
+                       </div>
+                   </div>
+               </fieldset>
+           </div>
+           
+             
+           <div class="slds-form-element__group slds-m-bottom_large">
+               <label class="slds-form-element__label" for="input-id-01">Office Phone</label>
+               <div class="slds-form-element__row contentFlex">
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">                           
+                       <input type="text" id="input-04" class="slds-input" />
+                       <label class="sub-label" for="input-04">(###)</label>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">
+                       <input type="text" id="input-05" class="slds-input" /> 
+                       <label class="sub-label" for="input-06">###</label>
+                       
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12">
+                       <input type="text" id="input-05" class="slds-input" />
+                       <label class="sub-label" for="input-03">###</label>
+                       
+                   </div>
+               </div>
+           </div>
+           
+           <div class="slds-form-element__group slds-m-bottom_large">
+               <label class="slds-form-element__label" for="input-id-01">Mobile  Phone *</label>
+               <div class="slds-form-element__row contentFlex">
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">                           
+                       <input type="text" id="input-04" class="slds-input" />
+                       <label class="sub-label" for="input-04">(###)</label>
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12 slds-m-right_medium">
+                       <input type="text" id="input-05" class="slds-input" /> 
+                       <label class="sub-label" for="input-06">###</label>
+                       
+                   </div>
+                   <div class="slds-form-element slds-size_1-of-12">
+                       <input type="text" id="input-05" class="slds-input" />
+                       <label class="sub-label" for="input-03">###</label>
+                       
+                   </div>
+               </div>
+               </div>
+          
+           
+            <div class="slds-form slds-form_stacked slds-m-bottom_large">
+               <div class="slds-form-element">
+                   <label class="slds-form-element__label" for="input-id-01">Notes</label>
+                   <div class="slds-form-element__control">
+                       <label class="sub-label" for="input-03">Provide any additional information that you feel necessary</label>
+   						 <textarea id="input-unique-id" class="slds-textarea" ></textarea>
+                   </div>
+               </div>
+           </div>
+           
+           <button class="btnDefault">SUBMIT</button>
+        </form> 
+    </div>
+    
+    <footer class="footer">Powered by <a href="#">Squarespace</a></footer>
+</apex:page>

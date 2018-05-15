@@ -1,0 +1,47 @@
+<aura:component extends="forceCommunity:navigationMenuBase"
+                implements="forceCommunity:availableForAllPageTypes" >
+    
+    <aura:attribute name="isSmallNavBar" type="Boolean" default="false"/>
+    
+    <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical" aura:id="navigationBar">
+        <ul onclick="{!c.onClick}" class="menusection">
+            <aura:iteration items="{!v.menuItems}" var="item">
+                <li class="{!item.active ? 'slds-is-active' : ''}">
+                    <a href="javascript:void(0);" data-menu-item-id="{!item.id}" class="slds-navigation-list--vertical__action slds-text-link--reset">
+                        <lightning:icon iconName="utility:richtextbulletedlist" variant="richtextbulletedlist"/>
+                        <aura:if isTrue="{!v.isSmallNavBar}">
+                            <aura:if isTrue="{!item.label == 'Home'}">
+                                <div class="menuTitle">My Cases</div>
+                                <aura:set attribute="else">
+                                    <div class="menuTitle">{!item.label}</div>
+                                </aura:set>
+                            </aura:if>
+                            <aura:if isTrue="{!item.label == 'My Locations'}">
+                                <div class="menuTitle">My Locations</div>
+                                <aura:set attribute="else">
+                                    <div class="menuTitle">{!item.label}</div>
+                                </aura:set>
+                            </aura:if>
+                            <aura:if isTrue="{!item.label == 'User Registration'}">
+                                <div class="menuTitle">User Registration</div>
+                                <aura:set attribute="else">
+                                    <div class="menuTitle">{!item.label}</div>
+                                </aura:set>
+                            </aura:if>
+                            
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!item.label == 'Home'}">
+                                    My Cases
+                                    <aura:set attribute="else">
+                                        {!item.label}
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </a>
+                    
+                </li>
+            </aura:iteration>
+        </ul>
+    </div>
+</aura:component>

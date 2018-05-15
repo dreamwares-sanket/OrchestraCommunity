@@ -1,0 +1,65 @@
+.THIS {
+}
+.THIS.updateUser {
+    max-width: 620px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 3px;
+}
+.THIS.updateUser table tr td{padding:10px;font-size:14px;width:50%;}
+.THIS.updateUser table tr td:first-child{text-align:right;color: #909090;}
+
+.THIS .defaultBtn {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+    background-clip: border-box;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    line-height: 1.875rem;
+    text-decoration: none;
+    color: #0070d2;
+    -webkit-appearance: none;
+    white-space: normal;
+    cursor:pointer;
+}
+.THIS .bandBtn{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dddbda;
+    transition: border 0.15s linear;
+    background-color: #0070d2;
+    border-color: #0070d2;
+    color: white;
+    border-radius: 0.25rem;
+    line-height: 1.875rem;
+    margin-right:-10px;
+}
+.THIS .bandBtn:hover, .THIS .bandBtn:focus{   
+    background-color: #005fb2;
+    border-color: #005fb2;
+}
+
+.THIS .neutralBtn{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dddbda;
+    transition: border 0.15s linear;
+    border-color: #dddbda;
+    background-color: white;
+}
+.THIS .neutralBtn:hover, .THIS .neutralBtn:focus{
+        background-color: #f4f6f9;
+}
+.THIS .borderTop{ border-top: 1px solid #eaeaea; margin: 10px 0px; }
+
+@media (max-width:620px)
+    {
+    .THIS.updateUser{margin:20px;}
+}

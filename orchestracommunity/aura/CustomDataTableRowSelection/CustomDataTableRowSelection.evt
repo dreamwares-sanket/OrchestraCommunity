@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event handling when row get selected form custom data table" >
+    <aura:attribute name="dataTableId" type="String" required="true" access="global"/>
+    <aura:attribute name="selectedRowId" type="String" required="true" access="global"/>
+    <aura:attribute name="selectedRow" type="Object" required="true" access="global"/>
+</aura:event>

@@ -1,0 +1,19 @@
+.THIS .custom-action-td {
+    width: 2.5rem !important;
+}
+
+.THIS .custom-data-table {
+    max-height: 10rem;
+    width: 100% !important;
+    overflow: auto !important;
+}
+
+.THIS .custom-active {
+    background: #c4c4e0 !important;
+}
+
+.THIS .arrowIcn svg
+{width: 13px !important;
+    fill: #1589ee !important;
+    margin-top: -4px !important;
+}

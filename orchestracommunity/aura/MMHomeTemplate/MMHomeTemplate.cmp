@@ -1,0 +1,36 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="body" type="Aura.Component[]" required="false"/>
+    
+    <div class="navigation slds-clearfix" style="background: black;">
+        <div class="slds-float_left" style="padding: 6px 10px 7px;">
+            <span style="font-family: 'Roboto',sans-serif;font-size: 25px; color: white;">Maestro Maintenance</span>
+        </div>
+        <div class="slds-float_right" style="padding: 10px 4px 7px 9px;">
+            <div class="slds-col">{!v.profileMenu}</div>
+        </div>
+    </div> 
+    
+    <lightning:icon iconName="utility:rows" variant="rows" class="rowsIcn" onclick="{!c.showFullNavBar}"/>
+    <!-- {!v.navBar} -->
+    <div class="smallNavPanel" aura:id="smallNavBar">
+        <button class="panelBtn" onclick="{!c.showFullNavBar}">
+            <lightning:icon iconName="utility:chevronright" variant="chevronright"/></button>
+        <c:verticalNav isSmallNavBar="true"/>
+    </div> 
+    
+    <div class="navigation sideNavPanel" aura:id="fullNavBar"> 
+        <!--{!v.navBar}-->
+        <button class="panelBtn" onclick="{!c.showSmallNavBar}"><lightning:icon iconName="utility:chevronleft" variant="chevronleft"/></button>
+        <c:verticalNav isSmallNavBar="false"/> 
+    </div>    
+    
+    <div class="mainContentAreaColaps" aura:id="pageBody"> 
+        {!v.body}
+    </div>
+    
+</aura:component>

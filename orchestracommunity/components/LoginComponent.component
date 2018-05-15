@@ -1,0 +1,36 @@
+<apex:component controller="LoginController">
+    
+    <!-- Attribute Definitions -->
+    <apex:attribute name="show" description="display or not" type="Boolean" required="true"/>
+    
+    <!-- Component Definition -->
+    <apex:outputPanel rendered="{!show}">
+        <div class="login-window">
+            <div class="">
+                <!--<img src="https://praviation-prod.s3.amazonaws.com/static/images/icon-1.png" style="max-width:65px;" class="jet-icon"/>-->
+                <div class="">
+                    <!-- <label class="slds-form-element__label" for="username">Username</label> -->
+                    <div class="slds-form-element__control">
+                        <apex:input value="{!username}" type="text" id="username" html-placeholder="Username" styleClass="slds-input"/>
+                    </div>
+                </div>
+                <div class="">
+                    <!-- <label class="slds-form-element__label" for="password">Password</label> -->
+                    <div class="slds-form-element__control">
+                        <apex:inputSecret id="password" value="{!password}" html-placeholder="Password" styleClass="slds-input"/>
+                    </div>
+                    <div class="slds-text-align_right forgotLink">
+                        <a href="javascript:void(0);" onclick="showComponents(false, false, true); return false;" class="linkTxt">Forgot Password?</a>
+                    </div>
+                </div>
+                <!-- <label class="slds-form-element__label" for="password">Password</label> -->
+                <div class="btnClass">
+                    <apex:commandButton action="{!login}" onclick="showSpinner(true)" oncomplete="updatePageMsg({!isMsgShow}, '{!msgType}', '{!pageMsg}')" value="LOGIN" styleClass="login-btn" />
+                </div>
+            </div>
+            <div class="">
+                <a href="javascript:void(0);" onclick="showComponents(false, true, false); return false;" class="slds-text-align_center sign-btn">SIGN UP</a>
+            </div>
+        </div>
+    </apex:outputPanel>
+</apex:component>

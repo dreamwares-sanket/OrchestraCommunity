@@ -1,0 +1,30 @@
+<aura:component controller="UpdateUserDetailsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="user" type="User" />
+    <div class="updateUser">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">  
+            <tr>
+                <td>First Name :</td>
+                <td>{!v.user.FirstName}</td>
+            </tr>
+            <tr>
+                <td>Last Name :</td>
+                <td>{!v.user.LastName} </td>
+                
+            </tr>    
+            <tr>
+                <td>Email Id :</td>
+                <td>{!v.user.Email}</td>
+            </tr>
+            <tr>
+                <td>Phone Number :</td>
+                <td>{!v.user.Phone}</td>
+            </tr> 
+            <tr><td colspan="2"><div class="borderTop"></div></td></tr>
+            <tr>
+                <td><lightning:button label="Update" onclick="{!c.update}" class="defaultBtn bandBtn" /></td>
+                <td><lightning:button variant="brand" label="Cancel" onclick="{! c.handleClick }" class="defaultBtn neutralBtn" /></td>
+            </tr>
+        </table>
+    </div>
+</aura:component>

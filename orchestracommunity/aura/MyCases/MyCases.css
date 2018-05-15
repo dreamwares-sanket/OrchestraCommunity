@@ -1,0 +1,7 @@
+.THIS button.slds-button.slds-button--brand {
+    background-color: #39536d;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.THIS .slds-cell-edit { background-color: red !important; }
+.THIS tr { cursor: pointer; }

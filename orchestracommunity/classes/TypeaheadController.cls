@@ -32,7 +32,7 @@ public without sharing class TypeaheadController {
                 // SETS FILTER CLAUSE [ HARD CODED FOR ACCOUNT OBJECT ].
                 String sWhere = '';
                 if( objectName == 'Account' ) {
-                    ID recordTypeId = getRecordTypeId( 'Account', 'Management' );
+                    ID recordTypeId = SignUpHandler.getRecordTypeId( 'Account', 'Management' );
                     if( recordTypeId != NULL ) {
                         sWhere = ' WHERE RecordTypeId = \'' + recordTypeId + '\' ';
                     }
@@ -82,24 +82,5 @@ public without sharing class TypeaheadController {
             }
         }
         return listOfSearchedRecords;
-    }
-    
-    private static ID getRecordTypeId( String strObjectApiName, String strRecordTypeName ) {
-    
-        ID recordTypeId;
-        if( String.isNotBlank( strObjectApiName ) && String.isNotBlank( strRecordTypeName ) ) {
-            SObjectType sobjType = Schema.getGlobalDescribe().get( strObjectApiName );
-            if( sobjType != NULL ) {
-                
-                Map<String, Schema.RecordTypeInfo> recordTypeNameToInfo;
-                recordTypeNameToInfo = sobjType.getDescribe().getRecordTypeInfosByName();
-                
-                if( recordTypeNameToInfo.containsKey( strRecordTypeName ) ) {
-                    recordTypeId = recordTypeNameToInfo.get( strRecordTypeName ).getRecordTypeId();
-                }
-            }
-        }
-        System.debug( 'recordTypeId:-\n' + recordTypeId );
-        return recordTypeId;
     }
 }

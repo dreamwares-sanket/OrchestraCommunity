@@ -1,30 +1,39 @@
+/**
+	@ Purpose : Creates Account, Contact, and a Customer community user records.
+*/
 public without sharing class SignUpHandler {
     
     public AccountDTO accountData;
     public ContactDTO contactData;
     
     public class AccountDTO {
+		
+        public String searchEntity;
         public String billingEntityId; 
-        public String billingEntityName;  
-        public String officePhone ;
+        public String billingEntityName;
+        public String officePhone;
+        
         public String billingAddress ;
         public String billingStreet;
         public String billingCity;
         public String billingCountry;
         public String billingState;
         public String billingPostalCode;
+        
         public String physicalAddress;
         public String physicalStreet;
         public String physicalCity;
         public String physicalCountry;
         public String physicalState;
         public String physicalPostalCode;
+        
         public Boolean isBillingAddress;
         public Boolean isSameAddress;
         
     }
     
     public class ContactDTO {
+		
         public String firstName;   
         public String lastName ;
         public String email;
@@ -32,26 +41,32 @@ public without sharing class SignUpHandler {
     }
     
    
-    /**
-     *@purpose : Handle signup User functionality
-     *@return  : response
-     */
-    public Response signUpUser() {
+	/*
+		@ Purpose : Creates Account, Contact, and a Customer community user records.
+	*/
+	public Response signUpUser() {
         
-        System.debug( 'signUpData:-\n' + JSON.serialize( this ) );
+		System.debug( 'signUpData:-\n' + JSON.serialize( this ) );
         Response response = new response();
         
         if( accountData != NULL ) {
             if( contactData != NULL && String.isNotBlank( contactData.Email ) ) {
                 if( validateEmail( contactData.Email ) ) {
                     
-                    Account account = new Account( Id = accountData.billingEntityId );
                     Savepoint sp = Database.setSavepoint();
+                    Account account = new Account();
+                    if( String.isNotBlank( accountData.billingEntityId ) ) {
+                        account.Id = accountData.billingEntityId;
+                    }
+                    else {
+                        accountData.billingEntityName = accountData.searchEntity;
+                    }
                     
                     if( String.isBlank( account.Id ) ) {
                         try {
                             account = createAccount();
                             INSERT account;
+                            System.debug('Inserted account:-\n' + JSON.serialize( account ) );
                         }
                         catch( Exception e ) {
                             Database.Rollback( sp );
@@ -60,12 +75,12 @@ public without sharing class SignUpHandler {
                         }
                     } 
                     
-                    if( String.isBlank( account.Id ) ) {
+                    if( String.isNotBlank( account.Id ) ) {
                         
                         // Create Contact
                         Contact contact = new Contact();
                         try {
-                            contact = createContact( account.Id );
+                            contact = createContact( account );
                             INSERT contact;
                         }
                         catch( Exception e ) {
@@ -83,6 +98,9 @@ public without sharing class SignUpHandler {
                             response.setStatus( FALSE, System.Label.Failed_To_Save_Contact, NULL );
                         }
                     }
+                    else {
+                        response.setStatus( FALSE, System.Label.Failed_To_Save_Billing_Entity, NULL );
+                    }
                 }
                 else {
                     response.setStatus( FALSE, System.Label.Invalid_Email_Address, NULL );
@@ -99,15 +117,16 @@ public without sharing class SignUpHandler {
     }
     
        
-    /**
-     *@purpose : Handle account operation
-     *@return  : Account
-     */
+	/*
+		@ Purpose : Forms an account record from accountdata state.
+	*/
     private Account createAccount() {
+		
         Account account; 
-
-        if(accountData != null && String.isNotBlank(accountData.billingEntityName)) {
-            
+		CommunityUserSetting__c communityUserSetting = CommunityUserSetting__c.getInstance();
+        if( accountData != NULL && String.isNotBlank( accountData.billingEntityName ) &&
+			communityUserSetting != NULL && String.isNotBlank( communityUserSetting.Account_Default_Owner_ID__c )
+		) {
             account = new Account();
             account.Name = accountData.billingEntityName;
             account.Phone = accountData.officePhone;
@@ -116,61 +135,57 @@ public without sharing class SignUpHandler {
             account.ShippingCountry = accountData.physicalCountry;
             account.ShippingState = accountData.physicalState;
             account.ShippingPostalCode = accountData.physicalPostalCode;
+			
+            account.OwnerId = communityUserSetting.Account_Default_Owner_ID__c;
+			account.RecordTypeId = getRecordTypeId( 'Account', 'Management' );
             
-            if(accountData.isSameAddress) {
+            if( accountData.isSameAddress ) {
                 account.BillingStreet = accountData.physicalStreet;
                 account.ShippingCity = accountData.physicalCity;
                 account.ShippingCountry =accountData.physicalCountry;
                 account.ShippingState = accountData.physicalState;
                 account.ShippingPostalCode = accountData.physicalPostalCode;
             }
-            //else if(accountData.isBillingAddress) {
             else {
                 account.BillingStreet = accountData.billingStreet;
-                account.ShippingCity = accountData.billingCity;
-                account.ShippingCountry = accountData.billingCountry;
-                account.ShippingState = accountData.billingState;
-                account.ShippingPostalCode = accountData.billingPostalCode;
+                account.billingCity = accountData.billingCity;
+                account.billingCountry = accountData.billingCountry;
+                account.billingState = accountData.billingState;
+                account.billingPostalCode = accountData.billingPostalCode;
             }
         }
         return account;
     }
-    
-    /**
-     *@purpose : Fetch account by name
-     *@return  : account
-     */
-    private List<Account> getAccountByName() {
-        List<Account> accountList = [SELECT Id, Name, OwnerId, Owner.UserRoleId
-                                     FROM Account 
-                                     WHERE Name = : accountData.billingEntityName];
-        System.debug('accountList ==' +accountList);
-        return accountList;
-    }
 
-    /**
-     *@purpose : Populate contact fields
-     *@return  : contact
-     */
-    private Contact createContact(Id accountId) {
-        Contact contact = new Contact(); 
+    /*
+		@ Purpose : Forms a contact record from contactdata state.
+	*/
+    private Contact createContact( Account recordAccount ) {
         
-        if(contactData != null && String.isNotBlank(accountId) 
-           && String.isNotBlank(contactData.lastName) 
-           && String.isNotBlank(contactData.email)) {
-               
+        Contact contact = new Contact(); 
+        if( contactData != NULL && recordAccount != NULL && String.isNotBlank( recordAccount.Id ) && 
+            String.isNotBlank( contactData.lastName ) && String.isNotBlank( contactData.email )
+        ) { 
             contact.FirstName = contactData.firstName;
             contact.LastName = contactData.lastName;
             contact.Email = contactData.email;
             contact.MobilePhone = contactData.mobilePhone;
+            
+            contact.MailingStreet = recordAccount.ShippingStreet;
+            contact.MailingCity = recordAccount.ShippingCity;
+            contact.MailingCountry = recordAccount.ShippingCountry;
+            contact.MailingState = recordAccount.ShippingState;
+            contact.MailingPostalCode = recordAccount.ShippingPostalCode;
+			
+			//contact.OwnerId = recordAccount.OwnerId;
         }    
         return contact;
     }
     
-   /**
-    *@PURPOSE     : FETCHES AND DISPLAYS AN EXCEPTION MESSAGE.
-    *@PARAMETER   : EXCEPTION.
-    *@RETURN TYPE : STRING [ DETAILS OF THE EXCEPTION ].
+   /*
+		@ Purpose     : Fetches and displays an exception message.
+		@ Parameter   : Exception.
+		@ Return Type : STRING [ Details of the Exception ].
     */
    public static String displayExceptionMessage(Exception e) {
 
@@ -182,20 +197,44 @@ public without sharing class SignUpHandler {
    }
     
     
-    /**
-     *@Purpose : To Check Email Format
-     *@Parameter: Email address
-     *@Returns  : "true" if Email format is valid otherwise returns "false"
-     */
-    public static Boolean validateEmail(String email) { 
+    /*
+		@ Purpose : Validates the provided email address by returning TRUE/FALSE.
+	*/
+    public static Boolean validateEmail( String email ) { 
+	
         String emailRegex = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$'; 
-        //Create a new Pattern object for Email address
+        
+		//Create a new Pattern object for Email address
         Pattern emailPattern = Pattern.compile(emailRegex);
-        //Create a new Matcher object with  email as a parameter to compare
+        
+		//Create a new Matcher object with  email as a parameter to compare
         Matcher emailMatcher = emailPattern.matcher(email);
-        //Verify the match returns "true" if matches otherwise "false"
+        
+		//Verify the match returns "true" if matches otherwise "false"
         Boolean result = emailMatcher.matches();
         
         return result;
+    }
+	
+	/*
+		@ Purpose : Fetches record type id from object name and record type name.
+	*/
+	public static ID getRecordTypeId( String strObjectApiName, String strRecordTypeName ) {
+    
+        ID recordTypeId;
+        if( String.isNotBlank( strObjectApiName ) && String.isNotBlank( strRecordTypeName ) ) {
+            SObjectType sobjType = Schema.getGlobalDescribe().get( strObjectApiName );
+            if( sobjType != NULL ) {
+                
+                Map<String, Schema.RecordTypeInfo> recordTypeNameToInfo;
+                recordTypeNameToInfo = sobjType.getDescribe().getRecordTypeInfosByName();
+                
+                if( recordTypeNameToInfo.containsKey( strRecordTypeName ) ) {
+                    recordTypeId = recordTypeNameToInfo.get( strRecordTypeName ).getRecordTypeId();
+                }
+            }
+        }
+        System.debug( 'recordTypeId:-\n' + recordTypeId );
+        return recordTypeId;
     }
 }

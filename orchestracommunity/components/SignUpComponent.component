@@ -11,6 +11,11 @@
             <apex:image url="{!URLFOR($Resource.bannerImg, 'images/logoImg.png')}" width="168" /> 
             <h2>Account Set-Up</h2>
         </div>
+        
+        <style>
+            .form-container form div input.slds-input, textarea { font: inherit; }
+        </style>
+        
     </header>
     
     <div class="form-container">
@@ -21,11 +26,11 @@
                    <div class="slds-form-element__control">
                        <input type="text" id="selectedAccountId" name="billingEntityId" 
                               style="display:none;"/>
-                       <input type="text" id="selectedAccountName" 
+                       <input type="text" id="selectedAccountName"
                               name="billingEntityName" style="display:none;"/>
-                       <c:Typeahead searchBoxId="acctSearchBox" object="Account" 
-                                    primaryField="Name"
-                                    searchScope="NAME" placeholder="Billing Entity Name" 
+                       <c:Typeahead searchBoxId="acctSearchBox" object="Account" mandatory="true" 
+                                    primaryField="Name" name="searchEntity"
+                                    searchScope="NAME" 
                                     minSearchLength="2"
                                     destinationForSelectedId="selectedAccountId"
                                     destinationForSelectedValue="selectedAccountName"                                   
@@ -238,8 +243,9 @@
                <div class="slds-form-element">
                   <div class="slds-form-element__control">
                     <span class="slds-checkbox">
-                      <input type="checkbox" name="agreeCheck" required="true" id="agreeCheck" value="agreeCheck" />
-                      <label class="slds-checkbox__label" for="agreeCheck">
+                      <input type="checkbox" name="isAgreedToTermsAndConditions" required="true" 
+                             id="checkbox-2" value="true"/>
+                      <label class="slds-checkbox__label" for="checkbox-2">
                         <span class="slds-checkbox_faux"></span>
                         <span class="slds-form-element__label">I agree to <a target="_blank" href="https://orchestrapartners123--partial--c.cs96.content.force.com/servlet/servlet.FileDownload?file=0151g0000005YPM">terms and conditions</a></span>
                       </label>

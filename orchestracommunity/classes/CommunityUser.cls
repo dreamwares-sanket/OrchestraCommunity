@@ -18,7 +18,7 @@ public class CommunityUser {
 				
 				Integer intMatchedUsers = [ SELECT COUNT() FROM User WHERE UserName =: contact.Email ];
 				if( intMatchedUsers > 0 ) {
-					return new Response( FALSE, 'User already exists for this Email Address.', NULL );
+					return new Response( FALSE, System.Label.Email_already_exists, NULL );
 				}
 				else {
 					String strUniqueNickName = getUniqueName( contact );
@@ -46,20 +46,23 @@ public class CommunityUser {
 						communityUser.Alias += contact.LastName.left( 1 );
 						try {
 							INSERT communityUser;
-							response = new Response( TRUE, 'Congratulations, You are successfully registered.', communityUser );
+							response = new Response( TRUE, System.Label.Signup_Success, communityUser );
 						}
 						Catch( Exception e ) {
 						   SignUpHandler.displayExceptionMessage( e );
-						   return new Response(false, 'Oops something went wrong while creating user! please try again.', NULL );
+						   return new Response( FALSE, System.Label.Signup_Failed, NULL );
 						}
+                        finally {
+                            System.debug( 'communityUser:-\n' + JSON.serialize( communityUser ) );
+                        }
 					} 
 					else {
-						return new Response( FALSE, 'Sorry, An unexpected error occurred while creating Nickname.', NULL );
+						return new Response( FALSE, System.Label.Nickname_Failed, NULL );
 					}
 				}
 			}
 			else{
-                return new Response( FALSE, 'Sorry, Profile details were missing. Please contact System Administrator.', NULL );
+                return new Response( FALSE, System.Label.Community_User_Profile_Missing, NULL );
             }
 		}
 		else {

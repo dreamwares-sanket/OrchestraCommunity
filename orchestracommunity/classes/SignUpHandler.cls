@@ -29,6 +29,7 @@ public without sharing class SignUpHandler {
         
         public Boolean isBillingAddress;
         public Boolean isSameAddress;
+        public Boolean isAgreedToTermsAndConditions;
         
     }
     
@@ -66,12 +67,14 @@ public without sharing class SignUpHandler {
                         try {
                             account = createAccount();
                             INSERT account;
-                            System.debug('Inserted account:-\n' + JSON.serialize( account ) );
                         }
                         catch( Exception e ) {
                             Database.Rollback( sp );
                             displayExceptionMessage( e );
                             response.setStatus( FALSE, System.Label.Failed_To_Save_Billing_Entity, NULL );
+                        }
+                        finally {
+                            System.debug( 'Inserted account:-\n' + JSON.serialize( account ) );
                         }
                     } 
                     
@@ -86,6 +89,9 @@ public without sharing class SignUpHandler {
                         catch( Exception e ) {
                             Database.Rollback( sp );
                             displayExceptionMessage( e );
+                        }
+                        finally {
+                            System.debug( 'Inserted contact:-\n' + JSON.serialize( contact ) );
                         }
                         
                         if( contact.Id != NULL ) {
@@ -138,7 +144,8 @@ public without sharing class SignUpHandler {
 			
             account.OwnerId = communityUserSetting.Account_Default_Owner_ID__c;
 			account.RecordTypeId = getRecordTypeId( 'Account', 'Management' );
-            
+            account.Agree_to_Terms_and_Conditions__c = accountData.isAgreedToTermsAndConditions;
+                
             if( accountData.isSameAddress ) {
                 account.BillingStreet = accountData.physicalStreet;
                 account.ShippingCity = accountData.physicalCity;
@@ -177,8 +184,9 @@ public without sharing class SignUpHandler {
             contact.MailingState = recordAccount.ShippingState;
             contact.MailingPostalCode = recordAccount.ShippingPostalCode;
 			
-			//contact.OwnerId = recordAccount.OwnerId;
-        }    
+			contact.AccountId = recordAccount.Id;
+            contact.Agree_to_Terms_and_Conditions__c = recordAccount.Agree_to_Terms_and_Conditions__c;
+        }
         return contact;
     }
     

@@ -82,7 +82,13 @@
     
     <apex:attribute name="searchBoxId" type="String" default="searchBox"
                     description="Id attribute for the search input box." />
+    
+    <apex:attribute name="name" type="String" default="searchEntity"
+                    description="name of the search input box." />
                     
+    <apex:attribute name="mandatory" type="Boolean" default="false" 
+                    description="Whether this field is mandatory or not." />
+                                    
     <apex:attribute name="styleClass" type="String"
                     description="CSS class attribute to apply on the search input box." />
                     
@@ -236,7 +242,8 @@
     </script>
 
     <div>
-        <input id="{!searchBoxId}" placeholder="{!placeholder}" class="tt-search-box {!styleClass}" style="{!style}" />
+        <input id="{!searchBoxId}" required="{!mandatory}" placeholder="{!placeholder}" 
+               class="tt-search-box {!styleClass}" style="{!style}" name="{!name}" />
     </div>
 
 </apex:component>

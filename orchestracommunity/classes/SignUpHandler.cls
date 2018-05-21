@@ -1,53 +1,91 @@
 /**
-	@ Purpose : Creates Account, Contact, and a Customer community user records.
+    @ Purpose : Creates Account, Contact, and a Customer community user records.
 */
 public without sharing class SignUpHandler {
     
     public AccountDTO accountData;
     public ContactDTO contactData;
     
+    public SignUpHandler() {
+        
+        this.accountData = new AccountDTO();
+        this.contactData = new ContactDTO();
+    }
+    
     public class AccountDTO {
-		
+        
         public String searchEntity;
         public String billingEntityId; 
         public String billingEntityName;
         public String officePhone;
         
-        public String billingAddress ;
+        public String billingAddress;
         public String billingStreet;
         public String billingCity;
-        public String billingCountry;
         public String billingState;
+        public String billingCountry;
         public String billingPostalCode;
         
         public String physicalAddress;
         public String physicalStreet;
         public String physicalCity;
-        public String physicalCountry;
         public String physicalState;
+        public String physicalCountry;
         public String physicalPostalCode;
         
         public Boolean isBillingAddress;
         public Boolean isSameAddress;
         public Boolean isAgreedToTermsAndConditions;
         
+        public AccountDTO() {
+            
+            this.searchEntity = '';
+            this.billingEntityId = NULL;
+            this.billingEntityName = '';
+            this.officePhone = '';
+            
+            this.billingAddress = '';
+            this.billingStreet = '';
+            this.billingCity = '';
+            this.billingState = '';
+            this.billingCountry = '';
+            this.billingPostalCode = '';
+            
+            this.physicalAddress = '';
+            this.physicalStreet = '';
+            this.physicalCity = '';
+            this.physicalState = '';
+            this.physicalCountry = '';
+            this.physicalPostalCode = '';
+            
+            this.isBillingAddress = FALSE;
+            this.isSameAddress = FALSE;
+            this.isAgreedToTermsAndConditions = FALSE;
+        }
     }
     
     public class ContactDTO {
-		
+        
         public String firstName;   
         public String lastName ;
         public String email;
         public String mobilePhone;
-    }
-    
-   
-	/*
-		@ Purpose : Creates Account, Contact, and a Customer community user records.
-	*/
-	public Response signUpUser() {
         
-		System.debug( 'signUpData:-\n' + JSON.serialize( this ) );
+        public ContactDTO() {
+            
+            this.firstName = '';
+            this.lastName = '';
+            this.email = '';
+            this.mobilePhone = '';
+        }
+    }
+   
+    /*
+        @ Purpose : Creates Account, Contact, and a Customer community user records.
+    */
+    public Response signUpUser() {
+        
+        System.debug( 'signUpData:-\n' + JSON.serialize( this ) );
         Response response = new response();
         
         if( accountData != NULL ) {
@@ -123,50 +161,63 @@ public without sharing class SignUpHandler {
     }
     
        
-	/*
-		@ Purpose : Forms an account record from accountdata state.
-	*/
+    /*
+        @ Purpose : Forms an account record from accountdata state.
+    */
     private Account createAccount() {
-		
-        Account account; 
-		CommunityUserSetting__c communityUserSetting = CommunityUserSetting__c.getInstance();
+        
+        Account account = new Account(); 
+        CommunityUserSetting__c communityUserSetting = CommunityUserSetting__c.getInstance();
+        
         if( accountData != NULL && String.isNotBlank( accountData.billingEntityName ) &&
-			communityUserSetting != NULL && String.isNotBlank( communityUserSetting.Account_Default_Owner_ID__c )
-		) {
-            account = new Account();
-            account.Name = accountData.billingEntityName;
-            account.Phone = accountData.officePhone;
-            account.ShippingStreet = accountData.physicalStreet;
-            account.ShippingCity = accountData.physicalCity;
-            account.ShippingCountry = accountData.physicalCountry;
-            account.ShippingState = accountData.physicalState;
-            account.ShippingPostalCode = accountData.physicalPostalCode;
-			
-            account.OwnerId = communityUserSetting.Account_Default_Owner_ID__c;
-			account.RecordTypeId = getRecordTypeId( 'Account', 'Management' );
-            account.Agree_to_Terms_and_Conditions__c = accountData.isAgreedToTermsAndConditions;
+            communityUserSetting != NULL && String.isNotBlank( communityUserSetting.Account_Default_Owner_ID__c )
+        ) {
+            ID accountOwnerId;
+            try {
+                accountOwnerId = communityUserSetting.Account_Default_Owner_ID__c;
+            }
+            catch( Exception e ) {
+                displayExceptionMessage( e );
+            }
+            
+            if( accountOwnerId != NULL ) {
+            
+                account = new Account();
+                account.Name = accountData.billingEntityName;
+                account.Phone = accountData.officePhone;
                 
-            if( accountData.isSameAddress ) {
-                account.BillingStreet = accountData.physicalStreet;
+                account.ShippingStreet = accountData.physicalStreet;
                 account.ShippingCity = accountData.physicalCity;
-                account.ShippingCountry =accountData.physicalCountry;
+                account.ShippingCountry = accountData.physicalCountry;
                 account.ShippingState = accountData.physicalState;
                 account.ShippingPostalCode = accountData.physicalPostalCode;
-            }
-            else {
-                account.BillingStreet = accountData.billingStreet;
-                account.billingCity = accountData.billingCity;
-                account.billingCountry = accountData.billingCountry;
-                account.billingState = accountData.billingState;
-                account.billingPostalCode = accountData.billingPostalCode;
+                
+                account.OwnerId = accountOwnerId;
+                account.RecordTypeId = getRecordTypeId( 'Account', 'Management' );
+                account.Agree_to_Terms_and_Conditions__c = accountData.isAgreedToTermsAndConditions;
+                    
+                if( accountData.isSameAddress ) {
+                    account.BillingStreet = accountData.physicalStreet;
+                    account.ShippingCity = accountData.physicalCity;
+                    account.ShippingCountry =accountData.physicalCountry;
+                    account.ShippingState = accountData.physicalState;
+                    account.ShippingPostalCode = accountData.physicalPostalCode;
+                }
+                else {
+                    account.BillingStreet = accountData.billingStreet;
+                    account.billingCity = accountData.billingCity;
+                    account.billingCountry = accountData.billingCountry;
+                    account.billingState = accountData.billingState;
+                    account.billingPostalCode = accountData.billingPostalCode;
+                }
             }
         }
         return account;
     }
 
     /*
-		@ Purpose : Forms a contact record from contactdata state.
-	*/
+        @ Purpose : Forms a contact record from contactdata state.
+    */
     private Contact createContact( Account recordAccount ) {
         
         Contact contact = new Contact(); 
@@ -183,17 +234,17 @@ public without sharing class SignUpHandler {
             contact.MailingCountry = recordAccount.ShippingCountry;
             contact.MailingState = recordAccount.ShippingState;
             contact.MailingPostalCode = recordAccount.ShippingPostalCode;
-			
-			contact.AccountId = recordAccount.Id;
+            
+            contact.AccountId = recordAccount.Id;
             contact.Agree_to_Terms_and_Conditions__c = recordAccount.Agree_to_Terms_and_Conditions__c;
         }
         return contact;
     }
     
    /*
-		@ Purpose     : Fetches and displays an exception message.
-		@ Parameter   : Exception.
-		@ Return Type : STRING [ Details of the Exception ].
+        @ Purpose     : Fetches and displays an exception message.
+        @ Parameter   : Exception.
+        @ Return Type : STRING [ Details of the Exception ].
     */
    public static String displayExceptionMessage(Exception e) {
 
@@ -206,28 +257,28 @@ public without sharing class SignUpHandler {
     
     
     /*
-		@ Purpose : Validates the provided email address by returning TRUE/FALSE.
-	*/
+        @ Purpose : Validates the provided email address by returning TRUE/FALSE.
+    */
     public static Boolean validateEmail( String email ) { 
-	
+    
         String emailRegex = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$'; 
         
-		//Create a new Pattern object for Email address
+        //Create a new Pattern object for Email address
         Pattern emailPattern = Pattern.compile(emailRegex);
         
-		//Create a new Matcher object with  email as a parameter to compare
+        //Create a new Matcher object with  email as a parameter to compare
         Matcher emailMatcher = emailPattern.matcher(email);
         
-		//Verify the match returns "true" if matches otherwise "false"
+        //Verify the match returns "true" if matches otherwise "false"
         Boolean result = emailMatcher.matches();
         
         return result;
     }
-	
-	/*
-		@ Purpose : Fetches record type id from object name and record type name.
-	*/
-	public static ID getRecordTypeId( String strObjectApiName, String strRecordTypeName ) {
+    
+    /*
+        @ Purpose : Fetches record type id from object name and record type name.
+    */
+    public static ID getRecordTypeId( String strObjectApiName, String strRecordTypeName ) {
     
         ID recordTypeId;
         if( String.isNotBlank( strObjectApiName ) && String.isNotBlank( strRecordTypeName ) ) {

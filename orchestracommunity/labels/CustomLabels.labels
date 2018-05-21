@@ -9,6 +9,22 @@
         <value>Sorry, Billing Entity details were missing.</value>
     </labels>
     <labels>
+        <fullName>Community_User_Profile_Missing</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Community User Profile Missing</shortDescription>
+        <value>Sorry, Profile details were missing. Please contact System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Email_already_exists</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email already exists</shortDescription>
+        <value>Sorry, User already exists for this Email Address.</value>
+    </labels>
+    <labels>
         <fullName>Failed_To_Create_User</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -36,12 +52,44 @@ Please contact System Administrator.</value>
 Please contact System Administrator.</value>
     </labels>
     <labels>
+        <fullName>Form_Data_Missing</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Form Data Missing</shortDescription>
+        <value>Sorry, Form data was missing. Please contact System Administrator.</value>
+    </labels>
+    <labels>
         <fullName>Invalid_Email_Address</fullName>
         <categories>Error</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invalid Email Address</shortDescription>
-        <value>Sorry, an email address was found.</value>
+        <value>Sorry, an invalid email address was found.</value>
+    </labels>
+    <labels>
+        <fullName>Nickname_Failed</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nickname Failed</shortDescription>
+        <value>&apos;Sorry, An unexpected error occurred while creating a Nickname for you.&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Signup_Failed</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Signup Failed</shortDescription>
+        <value>Oops, something went wrong while setting your account up. Please contact System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Signup_Success</fullName>
+        <categories>Success</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Signup Success</shortDescription>
+        <value>Congratulations, Your account is set up successfully.</value>
     </labels>
     <labels>
         <fullName>User_Details_Missing</fullName>

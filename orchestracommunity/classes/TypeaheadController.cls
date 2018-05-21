@@ -13,8 +13,10 @@ public without sharing class TypeaheadController {
     ) {
         List<sObject> listOfSearchedRecords;
         if( String.isNotBlank( queryString ) && String.isNotBlank( objectName )  ) {
+        
             queryString = String.escapeSingleQuotes( queryString );
             objectName = String.escapeSingleQuotes( objectName );
+            
             if( String.isNotBlank( queryString ) && String.isNotBlank( objectName )  ) {
                 
                 // SETS FIELDS TO BE SEARCHED IN.
@@ -60,6 +62,7 @@ public without sharing class TypeaheadController {
                 }
                 
                 List<List<sObject>> results = new List<List<sObject>>();
+                
                 try {
                     String strQuery = 'FIND \'' + queryString + '*\'' + sInFields +
                                       ' RETURNING ' + objectName + '( ' + sFields + 
@@ -69,12 +72,14 @@ public without sharing class TypeaheadController {
                     results = Search.query( strQuery );
                 }
                 catch( Exception e ) {
+                
                     System.debug( 'Sorry, an unexpected error occurred while fetching searh results. ' +
                                   'Please contact System Administrator. ' +
                                   'Exception details:-\n' + e.getMessage() 
                                 );
                 }
                 finally {
+                    System.debug( 'results:-\n' + JSON.serialize( results ) );
                     if( !results.isEmpty() ) {
                         listOfSearchedRecords = results.get( 0 );
                     }

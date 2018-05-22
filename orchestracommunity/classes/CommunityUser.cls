@@ -18,7 +18,7 @@ public without sharing class CommunityUser {
                 
                 Integer intMatchedUsers = [ SELECT COUNT() FROM User WHERE UserName =: contact.Email ];
                 if( intMatchedUsers > 0 ) {
-                    return new Response( FALSE, System.Label.Email_already_exists, NULL );
+                    response.setStatus( FALSE, System.Label.Email_already_exists, NULL );
                 }
                 else {
                     String strUniqueNickName = getUniqueName( contact );
@@ -46,23 +46,23 @@ public without sharing class CommunityUser {
                         communityUser.Alias += contact.LastName.left( 1 );
                         try {
                             INSERT communityUser;
-                            response = new Response( TRUE, System.Label.Signup_Success, communityUser );
+                            response.setStatus( TRUE, System.Label.Signup_Success, communityUser );
                         }
                         Catch( Exception e ) {
                            SignUpHandler.displayExceptionMessage( e );
-                           return new Response( FALSE, System.Label.Signup_Failed, NULL );
+                           response.setStatus( FALSE, System.Label.Signup_Failed, NULL );
                         }
                         finally {
                             System.debug( 'communityUser:-\n' + JSON.serialize( communityUser ) );
                         }
                     } 
                     else {
-                        return new Response( FALSE, System.Label.Nickname_Failed, NULL );
+                        response.setStatus( FALSE, System.Label.Nickname_Failed, NULL );
                     }
                 }
             }
             else{
-                return new Response( FALSE, System.Label.Community_User_Profile_Missing, NULL );
+                response.setStatus( FALSE, System.Label.Community_User_Profile_Missing, NULL );
             }
         }
         else {
